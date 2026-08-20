@@ -1,0 +1,28 @@
+Sustainability Document Hub - file inventory, the manual way
+============================================================
+
+Use this if Run-FilesPresent.cmd will not stay open. It needs no script file,
+so a locked-down execution policy cannot block it.
+
+1. Open File Explorer and navigate to the folder that CONTAINS your Docs and
+   Docs2 clones. You should be able to see both folder names in the window.
+
+2. Click into the address bar at the top, type
+
+       powershell
+
+   and press Enter. A PowerShell window opens already pointed at that folder.
+
+3. Paste the single line below and press Enter. Paste it as one line; do not
+   break it up.
+
+--------------------------------- copy from here ---------------------------------
+$r=@();foreach($d in @('Docs','Docs2','Docs3','Docs4')){if(Test-Path $d){$b=(Resolve-Path $d).Path;Get-ChildItem $b -Recurse -File|Where-Object{$_.FullName -notmatch '[\\/]\.git[\\/]'}|ForEach-Object{$r+=[pscustomobject]@{repo=$d;path=$_.FullName.Substring($b.Length+1).Replace('\','/');bytes=$_.Length}}}};$r|Export-Csv "$env:USERPROFILE\Downloads\files_present.csv" -NoTypeInformation -Encoding UTF8;"wrote $($r.Count) rows to Downloads\files_present.csv"
+---------------------------------- to here ---------------------------------------
+
+4. It prints how many rows it wrote. The file lands in your Downloads folder as
+   files_present.csv. Attach that file in the chat.
+
+If PowerShell reports "running scripts is disabled on this system", you pasted
+into the wrong place. That error only applies to script files, never to a command
+typed or pasted into an open PowerShell window.
