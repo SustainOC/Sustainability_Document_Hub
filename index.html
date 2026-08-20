@@ -233,7 +233,9 @@ mark{background:rgba(46,205,220,.4);color:inherit;border-radius:3px;padding:0 1p
 .dsec h3{font-size:.74rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--lake);margin:0 0 8px}
 .dsec p{margin:0;font-family:var(--font-serif);font-size:.92rem;line-height:1.72;color:var(--ink)}
 .dsec.use p{background:var(--sky-wash);border-left:3px solid var(--sky);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 16px}
-.dfoot{border-top:1px solid var(--line);padding:18px 26px;display:flex;flex-wrap:wrap;gap:10px;background:var(--paper)}
+.dnote{border-top:1px solid var(--line);padding:14px 26px 0;background:var(--paper);font-size:.78rem;line-height:1.6;color:var(--charcoal-50);margin:0}
+.dnote strong{color:var(--charcoal);font-weight:600}
+.dfoot{padding:12px 26px 18px;display:flex;flex-wrap:wrap;gap:10px;background:var(--paper)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:600;font-size:.875rem;padding:12px 20px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;text-decoration:none;transition:all .22s var(--ease)}
 .btn:hover{text-decoration:none;transform:translateY(-1px)}
 .btn-solid{background:var(--lake);color:#fff}
@@ -339,6 +341,13 @@ mark{background:rgba(46,205,220,.4);color:inherit;border-radius:3px;padding:0 1p
           Okanagan College
         </span>
         <p id="ocBlurb"></p>
+      </button>
+      <button class="door" id="doorPolicy" data-collection="policy" aria-pressed="false">
+        <span class="dh">
+          <svg class="icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 4.4 6.4v5c0 4.5 3.1 8.1 7.6 9.4 4.5-1.3 7.6-4.9 7.6-9.4v-5Z"/><path d="M9.3 12.1l1.9 1.9 3.6-3.7"/></svg>
+          Policy &amp; Regulation
+        </span>
+        <p id="policyBlurb"></p>
       </button>
       <button class="door" id="doorPeers" data-collection="peers" aria-pressed="true">
         <span class="dh">
@@ -485,6 +494,7 @@ mark{background:rgba(46,205,220,.4);color:inherit;border-radius:3px;padding:0 1p
     </button>
   </div>
   <div class="dbody" id="dBody"></div>
+  <p class="dnote" id="dNote"></p>
   <div class="dfoot" id="dFoot"></div>
 </aside>
 
@@ -511,6 +521,14 @@ var FACETS = {
     {key:"decade",      label:"Period",           field:"_decade",     open:false },
     {key:"lenses",      label:"Additional lens",  field:"lenses",      open:false, multi:true},
     {key:"flags",       label:"Flags",            field:"_flags",      open:true  }
+  ],
+  policy: [
+    {key:"group",       label:"Level of government", field:"group",      open:true },
+    {key:"institution", label:"Issuing body",     field:"institution", open:true  },
+    {key:"docClass",    label:"Document type",    field:"docClass",    open:false, ordered:"facets.docClasses"},
+    {key:"impactAreas", label:"Impact area",      field:"impactAreas", open:false, multi:true, ordered:"framework.impactAreas"},
+    {key:"decade",      label:"Period",           field:"_decade",     open:false },
+    {key:"flags",       label:"Flags",            field:"_flags",      open:false }
   ],
   oc: [
     {key:"category",    label:"Subject",          field:"category",    open:true  },
@@ -674,7 +692,7 @@ function accessBadge(r){
   var a = r.access || "";
   if(/restricted/i.test(a))            return '<span class="badge b-restricted">Restricted</span>';
   if(/internal/i.test(a))              return '<span class="badge b-internal">Internal</span>';
-  if(r.collection === "peers" && r.kind === "link")
+  if(r.kind === "link")
                                        return '<span class="badge b-link">External link</span>';
   return '<span class="badge b-public">Public</span>';
 }
@@ -689,7 +707,7 @@ function rowHTML(r){
   var meta = '<span class="inst">' + hl(r.institution) + '</span>' +
              '<span class="dot" aria-hidden="true"></span><span>' + esc(r.yearLabel) + '</span>' +
              '<span class="dot" aria-hidden="true"></span><span>' + hl(r.docType) + '</span>';
-  if(r.collection === "peers")
+  if(r.collection !== "oc")
     meta += '<span class="dot" aria-hidden="true"></span><span>' + esc(r.category) + '</span>';
 
   return '<button class="row" data-id="' + esc(r.id) + '">' +
@@ -738,6 +756,12 @@ function render(){
 
 /* ---------------- drawer ---------------- */
 var lastFocus = null;
+function prettyDate(iso){
+  var M = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+  if(!m) return iso || "";
+  return parseInt(m[3],10) + " " + M[parseInt(m[2],10)-1] + " " + m[1];
+}
 function openDrawer(id){
   var r = RECS.filter(function(x){ return x.id === id; })[0];
   if(!r) return;
@@ -751,10 +775,14 @@ function openDrawer(id){
     ["Subject", esc(r.category)],
     ["Classification", accessBadge(r)]
   ];
-  if(r.collection === "peers"){
+  if(r.collection === "peers" || r.collection === "policy"){
     if(r.group && r.group !== r.institution)
-      rows.splice(4, 0, ["Collection area", esc(r.group)]);
-    rows.push(["Verification", esc(r.verification)]);
+      rows.splice(4, 0, [r.collection === "policy" ? "Level" : "Collection area", esc(r.group)]);
+    rows.push(["Source check", esc(r.verification)]);
+    if(r.captured && r.hosted === true)
+      rows.push(["Library copy captured", esc(prettyDate(r.captured))]);
+  } else if(r.collection === "oc" && r.hosted === true){
+    rows.push(["Source check", esc(r.verification)]);
   } else {
     rows.push(["Held by", esc(r.verification)]);
   }
@@ -770,22 +798,36 @@ function openDrawer(id){
     body += '<div class="dsec"><h3>Summary</h3><p>' + esc(r.summary) + "</p></div>";
   if(r.ocUse)
     body += '<div class="dsec use"><h3>What OC could use it for</h3><p>' + esc(r.ocUse) + "</p></div>";
+  if(r.sourceNotes)
+    body += '<div class="dsec"><h3>Source notes</h3><p>' + esc(r.sourceNotes) + "</p></div>";
   if(r.sourceUrl)
     body += '<div class="dsec"><h3>Original source</h3><p class="urlline">' + esc(r.sourceUrl) + "</p></div>";
   if(r.path)
     body += '<div class="dsec"><h3>Library path</h3><p class="urlline">' + esc(r.path) + "</p></div>";
   document.getElementById("dBody").innerHTML = body;
 
-  var foot = "";
+  var foot = "", note = "";
   if(r.hosted === true && r.fileUrl){
     foot += '<a class="btn btn-solid" href="' + esc(r.fileUrl) + '" target="_blank" rel="noopener">Open document</a>';
     if(r.sourceUrl) foot += '<a class="btn btn-out" href="' + esc(r.sourceUrl) + '" target="_blank" rel="noopener">Original source</a>';
+    note = "<strong>Open document</strong> serves our own copy" +
+           (r.captured ? ", captured " + esc(prettyDate(r.captured)) : "") +
+           ". It keeps working even if the publisher moves or deletes the file. " +
+           "<strong>Original source</strong> is the live page: use it to check for a newer " +
+           "version, and cite that URL, not ours, in anything that leaves OC.";
   } else if(r.sourceUrl){
     foot += '<a class="btn btn-solid" href="' + esc(r.sourceUrl) + '" target="_blank" rel="noopener">Open at source</a>';
     if(r.fileUrl) foot += '<a class="btn btn-out" href="' + esc(r.fileUrl) + '" target="_blank" rel="noopener">Library copy</a>';
+    note = (r.kind === "link")
+      ? "A live page, dashboard or login-walled tool rather than a document, so there is " +
+        "nothing to mirror. This link can change without notice."
+      : "No copy is held in the library yet, so this opens the publisher's site. " +
+        "That link can break without warning, which is why the copy matters.";
   } else {
     foot += '<span class="btn btn-off">No link. Request from SustainOC.</span>';
+    note = "Held by OC and deliberately not published to a public URL.";
   }
+  document.getElementById("dNote").innerHTML = note;
   document.getElementById("dFoot").innerHTML = foot;
 
   var d = document.getElementById("drawer");
@@ -840,8 +882,10 @@ function readHash(){
 function setCollection(key, keepState){
   if(!keepState){ state = newState(key); }
   state.collection = key;
-  document.getElementById("doorOc").setAttribute("aria-pressed", key === "oc" ? "true" : "false");
-  document.getElementById("doorPeers").setAttribute("aria-pressed", key === "peers" ? "true" : "false");
+  [["doorOc","oc"],["doorPolicy","policy"],["doorPeers","peers"]].forEach(function(d){
+    var el = document.getElementById(d[0]);
+    if(el) el.setAttribute("aria-pressed", key === d[1] ? "true" : "false");
+  });
   render();
 }
 
@@ -891,8 +935,10 @@ function wire(){
     setCollection(state.collection, true);
   });
 
-  document.getElementById("doorOc").addEventListener("click", function(){ setCollection("oc"); });
-  document.getElementById("doorPeers").addEventListener("click", function(){ setCollection("peers"); });
+  ["oc","policy","peers"].forEach(function(k){
+    var el = document.querySelector('.door[data-collection="' + k + '"]');
+    if(el) el.addEventListener("click", function(){ setCollection(k); });
+  });
 
   document.getElementById("dClose").addEventListener("click", closeDrawer);
   document.getElementById("scrim").addEventListener("click", closeDrawer);
@@ -919,7 +965,8 @@ function boot(data){
   DATA = data;
   RECS = data.records || [];
   (data.collections || []).forEach(function(c){
-    var el = document.getElementById(c.key === "oc" ? "ocBlurb" : "peerBlurb");
+    var ids = {oc:"ocBlurb", policy:"policyBlurb", peers:"peerBlurb"};
+    var el = document.getElementById(ids[c.key] || "peerBlurb");
     if(el) el.textContent = c.blurb || "";
   });
   document.getElementById("loading").hidden = true;

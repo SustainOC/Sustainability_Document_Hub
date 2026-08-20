@@ -16,6 +16,10 @@ Maintained by the SustainOC team. Internal reference.
 | `Run-FilesPresent.cmd` | Double-click launcher for the inventory. Self-contained, always pauses. Use this. |
 | `INVENTORY-manual.txt` | Paste-one-line fallback if the launcher is blocked. |
 | `tools/Get-FilesPresent.ps1` | Lists what is actually in the library clones, for reconciliation. |
+| `docs3_manifest.csv` | The carbon evidence library: 41 records with titles, source URLs and notes. Hand-maintained. |
+| `docs3_sources.csv` | The source-URL research behind it, with verification status per document. |
+| `files_present_docs3.csv` | Inventory of the Docs3 clone. |
+| `INVENTORY-docs3.txt` | Paste-one-line inventory for Docs3, which searches for the folder. |
 | `.nojekyll` | Stops GitHub Pages running Jekyll, which would hide any `_`-prefixed folder. |
 | `robots.txt` | Keeps this out of search indexes. |
 
@@ -72,6 +76,20 @@ python -m http.server
 ```
 
 Then open `http://localhost:8000`.
+
+## Collections
+
+Three, set per record rather than per repository.
+
+| Collection | Holds | Source |
+|---|---|---|
+| Okanagan College | 18 OC statutory filings 2008-2025 plus 13 internal records | `docs3_manifest.csv`, `oc_seed.csv` |
+| Policy & Regulation | 23 provincial, federal, international and municipal instruments | `docs3_manifest.csv` |
+| Peer Institutions | 391 BC peer publications | `manifest_all.csv` |
+
+`docs3_manifest.csv` carries an explicit title and collection per row, because
+these documents are not peer publications and do not follow the peer library's
+`YEAR_INSTITUTION_Title.pdf` convention.
 
 ## Contact
 

@@ -1,69 +1,93 @@
-Library gaps and orphans, reconciled 2026-08-20
-==============================================
+Library gaps worklist
+=====================
 
-A. CATALOGUED BUT NO COPY IN THE LIBRARY (11)
-   Each one still works in the hub: the record falls back to the
-   publisher link. Saving the file by hand fixes it permanently.
+Reconciled against files_present.csv and download_log.csv, 2026-08-20.
+11 catalogued documents have no copy published in the library.
+The download log changes the picture: most of them are not missing at all.
 
-   www2.gov.bc.ca  (6)
-      BC Government / Sector   Okanagan College 2025 CCAR OC's own filing
-        save as: 08_Sector-and-Government/BC-Government/02_Climate-and-GHG-Reporting/2025_BCGov_Okanagan-College-2025-CCAR-OC's-own-filing.pdf
-        from   : https://www2.gov.bc.ca/assets/gov/environment/climate-change/cnar/2025/ps/okanagan_college_2025_ccar.pdf
-      Capilano University      Climate Change Accountability Report 2025
-        save as: 07_BC-College-Sector/Capilano-University/02_Climate-and-GHG-Reporting/2025_CapU_Climate-Change-Accountability-Report-2025.pdf
-        from   : https://www2.gov.bc.ca/assets/gov/environment/climate-change/cnar/2025/ps/capilano_university_2025_ccar.pdf
-      Emily Carr University    Climate Change Accountability Report 2025
-        save as: 07_BC-College-Sector/Emily-Carr-University/02_Climate-and-GHG-Reporting/2025_ECU_Climate-Change-Accountability-Report-2025.pdf
-        from   : https://www2.gov.bc.ca/assets/gov/environment/climate-change/cnar/2025/ps/emily_carr_2025_ccar.pdf
-      JIBC                     Climate Change Accountability Report 2025
-        save as: 07_BC-College-Sector/Justice-Institute-of-BC/11_Climate-Risk-and-Resilience/2025_JIBC_Climate-Change-Accountability-Report-2025.pdf
-        from   : https://www2.gov.bc.ca/assets/gov/environment/climate-change/cnar/2025/ps/justice_institue_of_bc_2025_ccar.pdf
-      NVIT                     Climate Change Accountability Report 2025
-        save as: 07_BC-College-Sector/Nicola-Valley-Institute-of-Technology/02_Climate-and-GHG-Reporting/2025_NVIT_Climate-Change-Accountability-Report-2025.pdf
-        from   : https://www2.gov.bc.ca/assets/gov/environment/climate-change/cnar/2025/ps/nicola_valley_institute_of_technology_2025_ccar.pdf
-      VCC                      Climate Change Accountability Report 2025
-        save as: 10_OC_Competitors/Vancouver-Community-College/02_Climate-and-GHG-Reporting/2025_VCC_Climate-Change-Accountability-Report-2025.pdf
-        from   : https://www2.gov.bc.ca/assets/gov/environment/climate-change/cnar/2025/ps/vancouver_community_college_2025_ccar.pdf
+--------------------------------------------------------------------------
+A. ALREADY ON YOUR DISK, NEVER PUSHED TO GITHUB  (9 files)
+--------------------------------------------------------------------------
 
-   www.capilanou.ca  (1)
-      Capilano University      Illuminating 2030 Academic Plan Summary
-        save as: 07_BC-College-Sector/Capilano-University/07_Curriculum-and-Research/2024_CapU_Illuminating-2030-Academic-Plan-Summary.pdf
-        from   : https://www.capilanou.ca/media/capilanouca/about-capu/governance/presidentx27s-office/reports-amp-initiatives/illuminating-2030/Illuminating-2030-Summary-Document.pdf
+   These exist in Downloads\OC_Peer_Sustainability_Library\. Seven were
+   downloaded on 18 Aug, after the repos were last pushed on 14 Aug. Two were
+   already on disk before that. Nothing needs downloading. Copy each file to
+   the path shown, commit, push.
 
-   selkirk.ca  (1)
-      Selkirk College          Selkirk College Sustainability Plan 2023 2027
-        save as: 07_BC-College-Sector/Selkirk-College/01_Plans-and-Strategies/2023_Selkirk_Selkirk-College-Sustainability-Plan-2023-2027.pdf
-        from   : https://selkirk.ca/sites/default/files/documents/selkirk-college-sustainability-plan-2023.pdf
+   Two folders do not exist in the repo yet and need creating first:
+     Docs2\07_BC-College-Sector\Nicola-Valley-Institute-of-Technology\02_Climate-and-GHG-Reporting\
+     Docs2\07_BC-College-Sector\Selkirk-College\01_Plans-and-Strategies\
 
-   www.vcc.ca  (1)
-      VCC                      Environmental Sustainability Strategy 2014 2017
-        save as: 10_OC_Competitors/Vancouver-Community-College/01_Plans-and-Strategies/2014_VCC_Environmental-Sustainability-Strategy-2014-2017.pdf
-        from   : https://www.vcc.ca/media/vancouver-community-college/content-assets/documents/news-events/Enviro_Strat_Plan_14-17_FINAL.pdf
+   Climate Change Accountability Report 2025
+     institution : Capilano University
+     retrieved   : 2026-08-18
+     copy to     : Docs2\07_BC-College-Sector\Capilano-University\02_Climate-and-GHG-Reporting\2025_CapU_Climate-Change-Accountability-Report-2025.pdf
 
-   sustain.ok.ubc.ca  (1)
-      UBC Okanagan             UBCO CAP Implementation Progress Report Oct 2022
-        save as: 02_UBC-Okanagan/01_Plans-and-Strategies/2022_UBCO_UBCO-CAP-Implementation-Progress-Report-Oct-2022.pdf
-        from   : https://sustain.ok.ubc.ca/wp-content/uploads/sites/70/2022/12/UBCO-CAP-Implementation-Progress-Report-2022-Oct-Final.pdf
+   Illuminating 2030 Academic Plan Summary
+     institution : Capilano University
+     retrieved   : 2026-08-18
+     copy to     : Docs2\07_BC-College-Sector\Capilano-University\07_Curriculum-and-Research\2024_CapU_Illuminating-2030-Academic-Plan-Summary.pdf
 
-   planning.ubc.ca  (1)
-      UBC Vancouver            Integrated Stormwater Management Plan
-        save as: 01_UBC-Vancouver/05_Energy-and-Buildings/2017_UBCV_Integrated-Stormwater-Management-Plan.pdf
-        from   : https://planning.ubc.ca/sites/default/files/2019-11/PLAN_UBC_ISMP_Final2017.pdf
+   Climate Change Accountability Report 2025
+     institution : Emily Carr University
+     retrieved   : 2026-08-18
+     copy to     : Docs2\07_BC-College-Sector\Emily-Carr-University\02_Climate-and-GHG-Reporting\2025_ECU_Climate-Change-Accountability-Report-2025.pdf
 
-B. IN THE LIBRARY BUT NOT CATALOGUED (2)
+   Climate Change Accountability Report 2025
+     institution : JIBC
+     retrieved   : 2026-08-18
+     copy to     : Docs2\07_BC-College-Sector\Justice-Institute-of-BC\11_Climate-Risk-and-Resilience\2025_JIBC_Climate-Change-Accountability-Report-2025.pdf
+
+   Climate Change Accountability Report 2025
+     institution : NVIT
+     retrieved   : 2026-08-18
+     copy to     : Docs2\07_BC-College-Sector\Nicola-Valley-Institute-of-Technology\02_Climate-and-GHG-Reporting\2025_NVIT_Climate-Change-Accountability-Report-2025.pdf
+
+   Selkirk College Sustainability Plan 2023 2027
+     institution : Selkirk College
+     retrieved   : 2026-08-14
+     copy to     : Docs2\07_BC-College-Sector\Selkirk-College\01_Plans-and-Strategies\2023_Selkirk_Selkirk-College-Sustainability-Plan-2023-2027.pdf
+
+   Okanagan College 2025 CCAR OC's own filing
+     institution : BC Government / Sector
+     retrieved   : 2026-08-14
+     copy to     : Docs2\08_Sector-and-Government\BC-Government\02_Climate-and-GHG-Reporting\2025_BCGov_Okanagan-College-2025-CCAR-OC's-own-filing.pdf
+
+   Environmental Sustainability Strategy 2014 2017
+     institution : VCC
+     retrieved   : 2026-08-18
+     copy to     : Docs2\10_OC_Competitors\Vancouver-Community-College\01_Plans-and-Strategies\2014_VCC_Environmental-Sustainability-Strategy-2014-2017.pdf
+
+   Climate Change Accountability Report 2025
+     institution : VCC
+     retrieved   : 2026-08-18
+     copy to     : Docs2\10_OC_Competitors\Vancouver-Community-College\02_Climate-and-GHG-Reporting\2025_VCC_Climate-Change-Accountability-Report-2025.pdf
+
+--------------------------------------------------------------------------
+B. GENUINELY UNAVAILABLE  (2 files)
+--------------------------------------------------------------------------
+
+   Integrated Stormwater Management Plan  (UBC Vancouver)
+     source  : https://planning.ubc.ca/sites/default/files/2019-11/PLAN_UBC_ISMP_Final2017.pdf
+     log says: FAILED / The remote server returned an error: (404) Not Found.
+     NOTE    : the library already holds
+               2026_UBCV_Integrated-Rainwater-Management-Plan.pdf,
+               which appears to be the successor to this plan. If you agree,
+               this manifest row should be retired and replaced by that file.
+
+   UBCO CAP Implementation Progress Report Oct 2022  (UBC Okanagan)
+     source  : https://sustain.ok.ubc.ca/wp-content/uploads/sites/70/2022/12/UBCO-CAP-Implementation-Progress-Report-2022-Oct-Final.pdf
+     log says: FAILED / The remote server returned an error: (404) Not Found.
+
+--------------------------------------------------------------------------
+C. IN THE LIBRARY BUT NOT CATALOGUED  (2 files)
+--------------------------------------------------------------------------
 
    01_UBC-Vancouver/05_Energy-and-Buildings/2026_UBCV_Integrated-Rainwater-Management-Plan.pdf
-      Needs a manifest row. Check whether this is the same document as the
-      'Integrated Stormwater Management Plan' listed above, or a separate plan.
-      Left unmatched deliberately rather than guessed.
+     Needs a manifest row. See the note in section B.
 
    05_TRU/06_Waste-and-Procurement/2017-TRU_Zero_Waste_201733146.pdf
-      Duplicate. Byte-for-byte the same size as
-      2017_TRU_TRU-Workplace-Conservation-Awareness-and-Zero-Waste-Quiz-Results-Fall-2017.pdf
-      which is already catalogued. Safe to delete.
-
-C. FOLDERS IN THE MANIFEST THAT DO NOT EXIST IN EITHER REPO
-
-   07_BC-College-Sector/Selkirk-College/                 (1 entry)
-   07_BC-College-Sector/Nicola-Valley-Institute-of-Technology/  (3 entries)
+     Duplicate, same byte size as the already-catalogued
+     2017_TRU_TRU-Workplace-Conservation-Awareness-and-Zero-Waste-Quiz-Results-Fall-2017.pdf
+     Safe to delete.
 

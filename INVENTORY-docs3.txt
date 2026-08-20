@@ -1,0 +1,29 @@
+Docs3 inventory
+===============
+
+The earlier one-liner looked for a folder named Docs3 sitting in the SAME folder
+you ran it from. Your Docs3 lives somewhere else, so it found nothing and
+reported zero rows without complaining. That is the script's fault, not yours.
+
+This version searches your whole user profile for Docs3, so its location does
+not matter.
+
+1. Open File Explorer, click the address bar, type
+
+       powershell
+
+   and press Enter. It does not matter which folder you are in this time.
+
+2. Paste the single line below and press Enter. Give it up to a minute. It is
+   searching, and OneDrive folders make that slower.
+
+--------------------------------- copy from here ---------------------------------
+$d=Get-ChildItem $HOME -Recurse -Depth 6 -Directory -Filter Docs3 -ErrorAction SilentlyContinue|Select-Object -First 1;if(!$d){'Docs3 not found anywhere under '+$HOME}else{$b=$d.FullName;'found Docs3 at: '+$b;$r=@(Get-ChildItem $b -Recurse -File -ErrorAction SilentlyContinue|Where-Object{$_.FullName -notmatch '[\\/]\.git[\\/]'}|ForEach-Object{[pscustomobject]@{repo='Docs3';path=$_.FullName.Substring($b.Length+1).Replace('\','/');bytes=$_.Length}});$o=Join-Path $HOME 'Downloads';if(-not (Test-Path $o)){$o=$HOME};$f=Join-Path $o 'files_present_docs3.csv';$r|Export-Csv -LiteralPath $f -NoTypeInformation -Encoding UTF8;if(Test-Path $f){'wrote '+$r.Count+' rows to: '+$f}else{'EXPORT FAILED - nothing written'}}
+---------------------------------- to here ---------------------------------------
+
+3. It prints where it found Docs3 and the full path of the file it wrote. Send
+   that CSV back.
+
+If it says "Docs3 not found anywhere under ...", the folder sits outside your
+user profile, on another drive or a network path. Just tell me the full path and
+I will give you a version pointed straight at it.
